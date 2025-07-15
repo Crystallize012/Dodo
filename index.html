@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>kennzy</title>
+  <style>
+    :root {
+      --bg-color: #1a1a1a;
+      --card-color: rgba(40, 40, 40, 0.7);
+      --text-color: #e5e5e5;
+      --subtext-color: #a3a3a3;
+      --button-color: #444;
+      --button-hover: #606060;
+      --gray-bar: #999;
+    }
+
+    [data-theme="light"] {
+      --bg-color: #f4f4f4;
+      --card-color: #ffffffcc;
+      --text-color: #1a1a1a;
+      --subtext-color: #444;
+      --button-color: #e0e0e0;
+      --button-hover: #cfcfcf;
+      --gray-bar: #888;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    .container {
+      background: var(--card-color);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 480px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+      position: relative;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    img.profile {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--gray-bar);
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 5px;
+    }
+
+    p.role {
+      color: var(--subtext-color);
+      margin-bottom: 10px;
+    }
+
+    .typing-text {
+      font-size: 13px;
+      color: var(--subtext-color);
+      height: 18px;
+      margin-bottom: 20px;
+    }
+
+    .bio-link {
+      background: var(--button-color);
+      padding: 12px 15px;
+      margin: 10px 0;
+      border-radius: 12px;
+      color: var(--text-color);
+      display: block;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .bio-link:hover {
+      background: var(--button-hover);
+      transform: translateY(-2px);
+    }
+
+    .music-btn {
+      margin: 20px auto 10px;
+      background: var(--button-color);
+      color: var(--text-color);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .time {
+      font-size: 13px;
+      margin-top: 10px;
+      color: var(--subtext-color);
+    }
+
+    .toggle-theme {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: var(--subtext-color);
+      cursor: pointer;
+    }
+
+    footer {
+      margin-top: 25px;
+      font-size: 12px;
+      color: var(--subtext-color);
+    }
+  </style>
+</head>
+<body data-theme="dark">
+
+  <div class="container">
+    <button class="toggle-theme" onclick="toggleTheme()">🌗</button>
+
+    <img src="https://files.catbox.moe/g8e37p.jpg" alt="Foto Profil" class="profile" />
+    <h1>Kennn </h1>
+    <p class="role">Owner | not developer</p>
+    <div class="typing-text" id="typing"></div>
+
+    <a class="bio-link" href="https://wa.me/6288212461534" target="_blank"> WhatsApp</a>
+        <a class="bio-link" href="https://wa.me/6285701734126" target="_blank"> WhatsApp</a>
+    <a class="bio-link" href="https://instagram.com/kenvxy_" target="_blank"> Instagram</a>
+    <a class="bio-link" href="https://tiktok.com/@alwys.dodo" target="_blank"> TikTok</a>
+    <a class="bio-link" href="https://whatsapp.com/channel/0029VbALF9uB4hdLg0QlSV2M" target="_blank"> WhatsApp Channel</a>
+        <a class="bio-link" href="https://whatsapp.com/channel/0029Vb5si3ZG8l5GJf8yaC1N" target="_blank"> WhatsApp Channel</a>
+    <a class="bio-link" href="https://youtube.com/@TrinityBgx" target="_blank"> YouTube</a>
+    <a class="bio-link" href="https://t.me/ZionStore666" target="_blank"> Telegram</a>
+
+    <button class="music-btn" onclick="toggleMusic()">🎵 play </button>
+    <div class="time" id="time"></div>
+
+    <footer>© 2025 Kenn • All rights reserved.</footer>
+  </div>
+
+  <audio id="bg-music" loop>
+    <source src="https://files.catbox.moe/lvhshq.mp3" type="audio/mpeg">
+    Browser kamu tidak mendukung audio.
+  </audio>
+
+  <script>
+    const audio = document.getElementById("bg-music");
+    const playBtn = document.querySelector(".music-btn");
+    const typing = document.getElementById("typing");
+    const texts = [
+      "Halo semuanya, Aku dodo partner chandz...",
+      "Butuh bot/panel? Langsung chat yaa",
+      "gabung ch ku buat info lebih lanjutt"
+    ];
+    let typingIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function typeEffect() {
+      const current = texts[typingIndex];
+      typing.textContent = current.substring(0, charIndex) + (charIndex % 2 === 0 ? "|" : "");
+      if (!isDeleting && charIndex < current.length) {
+        charIndex++;
+        setTimeout(typeEffect, 100);
+      } else if (isDeleting && charIndex > 0) {
+        charIndex--;
+        setTimeout(typeEffect, 50);
+      } else {
+        isDeleting = !isDeleting;
+        if (!isDeleting) typingIndex = (typingIndex + 1) % texts.length;
+        setTimeout(typeEffect, 1000);
+      }
+    }
+    typeEffect();
+
+    function toggleMusic() {
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = "⏸  ";
+      } else {
+        audio.pause();
+        playBtn.textContent = "🎵";
+      }
+    }
+
+    function updateTime() {
+      const now = new Date();
+      document.getElementById("time").textContent = now.toLocaleTimeString("id-ID");
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    function toggleTheme() {
+      const body = document.body;
+      const current = body.getAttribute("data-theme");
+      const next = current === "dark" ? "light" : "dark";
+      body.setAttribute("data-theme", next);
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) audio.pause();
+    });
+
+    window.addEventListener("beforeunload", () => {
+      audio.pause();
+    });
+  </script>
+
+</body>
+</html>
