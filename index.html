@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dodo | Official Bio</title>
   <style>
+    /* VARIABEL WARNA */
     :root {
       --bg-gradient: linear-gradient(135deg, #0f0f0f, #252525);
       --card-color: rgba(255, 255, 255, 0.05);
@@ -19,32 +20,34 @@
       --bg-gradient: linear-gradient(135deg, #e0e0e0, #ffffff);
       --card-color: rgba(0, 0, 0, 0.05);
       --text-color: #1a1a1a;
-      --subtext-color: #666;
+      --subtext-color: #444;
       --accent-color: #0056b3;
       --button-bg: rgba(0, 0, 0, 0.05);
       --button-hover: rgba(0, 0, 0, 0.1);
     }
 
+    /* DASAR */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
-      user-select: none; /* Mencegah seleksi teks */
+      user-select: none; /* Mencegah seleksi teks (Keamanan) */
     }
 
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: 'Segoe UI', Roboto, sans-serif;
       background: var(--bg-gradient);
       color: var(--text-color);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.4s ease;
-      overflow: hidden;
+      transition: all 0.5s ease;
+      overflow-x: hidden;
     }
 
+    /* KONTINER UTAMA */
     .container {
       background: var(--card-color);
       backdrop-filter: blur(20px);
@@ -65,6 +68,25 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* TOMBOL TEMA (BULAN) DENGAN ANIMASI */
+    .toggle-theme {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      z-index: 10;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Class yang dipicu lewat JavaScript saat diklik */
+    .toggle-theme.rotate-anim {
+      transform: rotate(360deg) scale(1.3);
+    }
+
+    /* PROFIL & TEKS */
     img.profile {
       width: 110px;
       height: 110px;
@@ -73,12 +95,9 @@
       border: 2px solid var(--accent-color);
       padding: 5px;
       margin-bottom: 15px;
-      transition: transform 0.3s ease;
     }
 
-    img.profile:hover { transform: scale(1.05); }
-
-    h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+    h1 { font-size: 24px; font-weight: 700; }
     .role { color: var(--accent-color); font-weight: 500; font-size: 14px; margin-bottom: 8px; }
 
     .typing-text {
@@ -88,6 +107,7 @@
       margin-bottom: 25px;
     }
 
+    /* TOMBOL LINK */
     .links-wrapper { display: flex; flex-direction: column; gap: 12px; }
 
     .bio-link {
@@ -98,48 +118,37 @@
       text-decoration: none;
       font-weight: 500;
       font-size: 15px;
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
       border: 1px solid rgba(255,255,255,0.05);
     }
 
     .bio-link:hover {
       background: var(--button-hover);
-      transform: scale(1.02);
+      transform: scale(1.03);
       border-color: var(--accent-color);
     }
 
+    /* MUSIK & WAKTU */
     .music-btn {
       margin-top: 25px;
       background: var(--accent-color);
       color: white;
       border: none;
-      width: 50px;
-      height: 50px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       cursor: pointer;
       font-size: 18px;
-      box-shadow: 0 5px 15px rgba(0, 122, 255, 0.3);
     }
 
     .time { font-size: 12px; margin-top: 15px; opacity: 0.6; font-family: monospace; }
-
-    .toggle-theme {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: none;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    footer { margin-top: 30px; font-size: 11px; color: var(--subtext-color); letter-spacing: 1px; }
+    footer { margin-top: 30px; font-size: 11px; color: var(--subtext-color); }
   </style>
 </head>
 <body data-theme="dark">
 
   <div class="container">
-    <button class="toggle-theme" onclick="toggleTheme()">🌓</button>
+    <button class="toggle-theme" onclick="toggleTheme()" id="themeBtn">🌓</button>
 
     <img src="https://files.catbox.moe/o387vs.jpg" alt="Dodo" class="profile" />
     <h1>Dodo</h1>
@@ -165,19 +174,34 @@
   </audio>
 
   <script>
-    // --- Proteksi Anti-Bobol Dasar ---
-    document.addEventListener('contextmenu', e => e.preventDefault()); // Matikan Klik Kanan
+    /* PROTEKSI DASAR (ANTI-BOBOL) */
+    document.addEventListener('contextmenu', e => e.preventDefault()); 
     document.onkeydown = function(e) {
-      if (e.keyCode == 123 || // F12
-          (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) || // Ctrl+Shift+I
-          (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) || // Ctrl+Shift+C
-          (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) || // Ctrl+Shift+J
-          (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) { // Ctrl+U
+      if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) || (e.ctrlKey && e.keyCode == 85)) {
         return false;
       }
     };
 
-    // --- Kontrol Musik ---
+    /* FUNGSI GANTI TEMA DENGAN ANIMASI ROTASI */
+    function toggleTheme() {
+      const body = document.body;
+      const btn = document.getElementById("themeBtn");
+      
+      // Jalankan animasi rotasi
+      btn.classList.add("rotate-anim");
+      
+      // Ganti tema & icon
+      const current = body.getAttribute("data-theme");
+      const next = current === "dark" ? "light" : "dark";
+      
+      setTimeout(() => {
+        body.setAttribute("data-theme", next);
+        btn.textContent = next === "dark" ? "🌓" : "☀️";
+        btn.classList.remove("rotate-anim");
+      }, 250); // Delay sedikit agar pas dengan putaran
+    }
+
+    /* KONTROL MUSIK */
     const audio = document.getElementById("bg-music");
     const playBtn = document.querySelector(".music-btn");
     function toggleMusic() {
@@ -190,7 +214,7 @@
       }
     }
 
-    // --- Efek Mengetik ---
+    /* EFEK MENGETIK */
     const typing = document.getElementById("typing");
     const texts = ["Partner Chandz...", "Ready Bot & Panel", "Join channel info ya!"];
     let tIdx = 0, cIdx = 0, isDel = false;
@@ -198,25 +222,19 @@
     function type() {
       const full = texts[tIdx];
       typing.innerHTML = isDel ? full.substring(0, cIdx--) : full.substring(0, cIdx++);
-      
       let speed = isDel ? 50 : 100;
       if (!isDel && cIdx === full.length + 1) { isDel = true; speed = 2000; }
       else if (isDel && cIdx === 0) { isDel = false; tIdx = (tIdx + 1) % texts.length; speed = 500; }
-      
       setTimeout(type, speed);
     }
     type();
 
-    // --- Jam & Tema ---
+    /* JAM REALTIME */
     function updateTime() {
       document.getElementById("time").textContent = new Date().toLocaleTimeString("id-ID");
     }
     setInterval(updateTime, 1000);
-
-    function toggleTheme() {
-      const body = document.body;
-      body.setAttribute("data-theme", body.getAttribute("data-theme") === "dark" ? "light" : "dark");
-    }
+    updateTime();
   </script>
 </body>
 </html>
