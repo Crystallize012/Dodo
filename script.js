@@ -68,9 +68,13 @@ app.innerHTML = `
         <p style="color:var(--accent-color)">Dodo Cihuyyy</p>
         <div id="typing" style="margin: 20px 0; height: 20px; color: var(--subtext-color)"></div>
         <div class="links-wrapper">
-            <a class="bio-link" href="https://wa.me/6288212461534">WhatsApp Personal</a>
-            <a class="bio-link" href="https://www.instagram.com/always.ido">Instagram</a>
-            <a class="bio-link" href="https://t.me/dodoirused">Telegram</a>
+            
+    <a class="bio-link" href="https://wa.me/6288212461534" target="_blank"> WhatsApp Dodo</a>
+    <a class="bio-link" href="https://www.instagram.com/always.ido" target="_blank"> Instagram</a>
+    <a class="bio-link" href="https://tiktok.com/@alwys.dodo" target="_blank"> TikTok</a>
+    <a class="bio-link" href="https://whatsapp.com/channel/0029VbALF9uB4hdLg0QlSV2M" target="_blank"> WhatsApp Channel¹</a>
+    <a class="bio-link" href="https://whatsapp.com/channel/0029Vb5si3ZG8l5GJf8yaC1N" target="_blank"> WhatsApp Channel²</a>
+    <a class="bio-link" href="https://t.me/dodoirused" target="_blank"> Telegram</a>
         </div>
         <button class="music-btn" id="musicBtn">▶</button>
         <div id="time" style="font-size: 12px; margin-top: 15px; opacity: 0.6;"></div>
