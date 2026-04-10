@@ -76,10 +76,16 @@ app.innerHTML = `
     <a class="bio-link" href="https://whatsapp.com/channel/0029Vb5si3ZG8l5GJf8yaC1N" target="_blank"> WhatsApp Channel²</a>
     <a class="bio-link" href="https://t.me/dodoirused" target="_blank"> Telegram</a>
         </div>
-        <button class="music-btn" id="musicBtn">▶</button>
-        <div id="time" style="font-size: 12px; margin-top: 15px; opacity: 0.6;"></div>
-    </div>
-    <audio id="bg-music" loop><source src="https://files.catbox.moe/lvhshq.mp3"></audio>
+        <button class="music-btn" onclick="toggleMusic()">🎵 play </button>
+    <div class="time" id="time"></div>
+
+    <footer>© Website Dodo • Copyright</footer>
+  </div>
+
+  <audio id="bg-music" loop>
+    <source src="https://files.catbox.moe/lvhshq.mp3" type="audio/mpeg">
+    Browser kamu tidak mendukung audio.
+  </audio>
 `;
 
 // 3. Logika JavaScript
