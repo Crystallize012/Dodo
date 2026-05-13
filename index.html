@@ -1,382 +1,124 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dodo | Official Bio</title>
 
-    <title>Dodo | @Crystallize012</title>
-    <meta name="title" content="Dodo | @Crystallize012">
-    <meta name="description" content="Official Bio of Dodo — Developer, Builder, Dreamer.">
-    <meta name="theme-color" content="#a78bfa">
-
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Dodo | @Crystallize012">
-    <meta property="og:description" content="Developer, Builder, Dreamer. Explore my projects and social links.">
-
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Dodo | @Crystallize012">
-    <meta property="twitter:description" content="Developer, Builder, Dreamer.">
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
-
-        :root {
-            --accent: #a78bfa;
-            --accent2: #f472b6;
-            --green: #34d399;
-            --bg-dark: rgba(8, 8, 18, 0.92);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        html, body { height: 100%; }
-
-        body {
-            background-color: #0a0a14;
-            background-image:
-                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(167,139,250,0.12) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(244,114,182,0.10) 0%, transparent 60%),
-                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a78bfa' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            color: white;
-            font-family: 'Syne', sans-serif;
-            display: flex;
-            justify-content: center;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        /* Scanline overlay */
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0,0,0,0.03) 2px,
-                rgba(0,0,0,0.03) 4px
-            );
-            pointer-events: none;
-            z-index: 999;
-        }
-
-        .main-container {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 1100px;
-            display: flex;
-            flex-direction: column;
-            padding: 2rem 1.5rem;
-            min-height: 100vh;
-        }
-
-        .glass-card {
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(167,139,250,0.15);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .glass-card:hover {
-            background: rgba(167,139,250,0.08);
-            border-color: rgba(167,139,250,0.35);
-            transform: translateX(4px);
-            box-shadow: 0 0 24px rgba(167,139,250,0.12);
-        }
-
-        .glass-card:active { transform: scale(0.97); }
-
-        .terminal-bg {
-            background: rgba(5, 5, 12, 0.9);
-            border: 1px solid rgba(167,139,250,0.2);
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .dot { height: 10px; width: 10px; border-radius: 50%; }
-
-        .avatar-ring {
-            position: relative;
-            padding: 3px;
-            border-radius: 28px;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            box-shadow: 0 0 40px rgba(167,139,250,0.3);
-        }
-        .avatar-ring img {
-            border-radius: 24px;
-            display: block;
-        }
-
-        /* Animated gradient text */
-        .grad-text {
-            background: linear-gradient(90deg, #a78bfa, #f472b6, #a78bfa);
-            background-size: 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: shimmer 3s linear infinite;
-        }
-        @keyframes shimmer {
-            0% { background-position: 0% }
-            100% { background-position: 200% }
-        }
-
-        /* Blinking cursor */
-        .cursor::after {
-            content: '▋';
-            animation: blink 1s step-end infinite;
-            color: var(--green);
-        }
-        @keyframes blink { 0%,100% { opacity:1 } 50% { opacity:0 } }
-
-        /* Grid layout */
-        @media (min-width: 1024px) {
-            .content-grid {
-                display: grid;
-                grid-template-columns: 1fr 1.2fr;
-                gap: 3rem;
-                align-items: start;
-                padding-top: 2rem;
-            }
-        }
-
-        /* Stagger entrance */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeUp 0.6s ease forwards;
-        }
-        @keyframes fadeUp {
-            to { opacity:1; transform:translateY(0); }
-        }
-
-        /* Link icon glow on hover */
-        .icon-wrap { transition: transform 0.3s, box-shadow 0.3s; }
-        .glass-card:hover .icon-wrap { transform: scale(1.15) rotate(-5deg); }
-
-        /* Badge pulse */
-        .badge-pulse {
-            animation: pulse 2s ease infinite;
-        }
-        @keyframes pulse {
-            0%,100% { box-shadow: 0 0 0 0 rgba(167,139,250,0.4); }
-            50% { box-shadow: 0 0 0 6px rgba(167,139,250,0); }
-        }
-
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* Glowing line separator */
-        .glow-line {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(167,139,250,0.5), transparent);
-        }
-    </style>
-</head>
-<body>
-
-<div class="main-container">
-    <div class="content-grid">
-
-        <!-- LEFT: Profile -->
-        <div class="flex flex-col items-center lg:items-start space-y-6 mb-8 lg:mb-0">
-
-            <!-- Avatar -->
-            <div class="fade-in" style="animation-delay:0.1s">
-                <div class="avatar-ring">
-                    <img src="https://avatars.githubusercontent.com/u/148680367?v=4"
-                         alt="Dodo"
-                         class="w-24 h-24 lg:w-36 lg:h-36 object-cover object-top">
-                </div>
-            </div>
-
-            <!-- Name & Title -->
-            <div class="text-center lg:text-left fade-in" style="animation-delay:0.2s">
-                <h1 class="text-3xl lg:text-5xl font-extrabold tracking-tight grad-text">Dodo</h1>
-                <p class="mt-1 text-[10px] lg:text-xs font-bold uppercase tracking-[0.3em] text-violet-300/70 bg-violet-500/10 border border-violet-500/20 px-3 py-1 rounded-full inline-block">
-                    Developer &bull; Builder &bull; Dreamer
-                </p>
-            </div>
-
-            <!-- Terminal -->
-            <div class="w-full terminal-bg rounded-2xl overflow-hidden shadow-2xl fade-in" style="animation-delay:0.3s">
-                <!-- Titlebar -->
-                <div class="bg-[#0d0d1a] px-4 py-2 flex items-center justify-between border-b border-violet-500/15">
-                    <div class="flex space-x-2">
-                        <span class="dot bg-[#ff5f56]"></span>
-                        <span class="dot bg-[#ffbd2e]"></span>
-                        <span class="dot bg-[#27c93f]"></span>
-                    </div>
-                    <span class="text-[9px] text-violet-300/50 font-bold uppercase tracking-widest font-mono">crystallize@dodo:~</span>
-                </div>
-
-                <!-- Body -->
-                <div class="p-4 lg:p-5 text-[11px] lg:text-[12px] leading-relaxed font-mono">
-                    <div class="mb-3">
-                        <span class="text-violet-400 font-bold">crystallize@dodo</span><span class="text-white/60">:~$</span>
-                        <span class="text-white"> cat about.txt</span>
-                    </div>
-
-                    <div id="typing-text" class="text-emerald-300 cursor"></div>
-
-                    <div id="extra-info" class="hidden mt-4 space-y-4">
-                        <div class="space-y-1.5 text-white/90">
-                            <p><span class="text-violet-400">►</span> Stack: <span class="text-emerald-300">JavaScript, Node.js, HTML/CSS</span></p>
-                            <p><span class="text-violet-400">►</span> Tools: <span class="text-emerald-300">VS Code, Git, Vercel</span></p>
-                            <p><span class="text-violet-400">►</span> Focus: <span class="text-emerald-300">Web Dev & Open Source</span></p>
-                        </div>
-
-                        <div class="glow-line"></div>
-
-                        <div class="space-y-1 text-white/70">
-                            <p>[ <span class="text-yellow-400 font-bold">STATUS</span> ] Learning Mode = <span class="text-emerald-400 font-bold">ACTIVE</span></p>
-                            <p>[ <span class="text-pink-400 font-bold">VIBE</span> ] Building Cool Stuff 🔮</p>
-                            <p class="text-violet-300 font-bold mt-1">Code() → Ship() → Repeat() ∞</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stats row -->
-            <div class="w-full grid grid-cols-3 gap-2 fade-in" style="animation-delay:0.5s">
-                <div class="terminal-bg rounded-xl p-3 text-center border border-violet-500/10">
-                    <p class="text-[9px] text-violet-300/50 uppercase tracking-widest font-mono mb-1">Repos</p>
-                    <p class="text-xl font-extrabold text-violet-300">∞</p>
-                </div>
-                <div class="terminal-bg rounded-xl p-3 text-center border border-pink-500/10">
-                    <p class="text-[9px] text-pink-300/50 uppercase tracking-widest font-mono mb-1">Commits</p>
-                    <p class="text-xl font-extrabold text-pink-300" id="commit-count">18+</p>
-                </div>
-                <div class="terminal-bg rounded-xl p-3 text-center border border-emerald-500/10">
-                    <p class="text-[9px] text-emerald-300/50 uppercase tracking-widest font-mono mb-1">Status</p>
-                    <p class="text-xl font-extrabold text-emerald-300">ON</p>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- RIGHT: Links -->
-        <div class="flex flex-col space-y-3 lg:space-y-4 pb-10 lg:pt-2">
-
-            <!-- GitHub -->
-            <a href="https://github.com/Crystallize012" class="glass-card flex items-center p-4 lg:p-5 rounded-2xl group shadow-lg fade-in" style="animation-delay:0.35s">
-                <div class="icon-wrap w-11 h-11 lg:w-13 lg:h-13 bg-white/5 text-white rounded-xl flex items-center justify-center mr-4 border border-white/10">
-                    <i class="fa-brands fa-github text-xl lg:text-2xl"></i>
-                </div>
-                <div class="flex-grow">
-                    <p class="text-sm lg:text-base font-bold text-white">GitHub</p>
-                    <p class="text-[9px] lg:text-[10px] text-gray-400 uppercase tracking-widest">@Crystallize012 · Projects & Source</p>
-                </div>
-                <i class="fa-solid fa-arrow-right text-violet-400/60 text-xs group-hover:text-violet-400 group-hover:translate-x-1 transition-all"></i>
-            </a>
-
-            <!-- GitHub Repo: Dodo -->
-            <a href="https://github.com/Crystallize012/Dodo" class="glass-card flex items-center p-4 lg:p-5 rounded-2xl group shadow-lg fade-in" style="animation-delay:0.4s">
-                <div class="icon-wrap w-11 h-11 bg-violet-500/15 text-violet-300 rounded-xl flex items-center justify-center mr-4 border border-violet-500/20">
-                    <i class="fa-solid fa-code-branch text-lg lg:text-xl"></i>
-                </div>
-                <div class="flex-grow">
-                    <p class="text-sm lg:text-base font-bold text-white">Dodo Project</p>
-                    <p class="text-[9px] lg:text-[10px] text-gray-400 uppercase tracking-widest">Repository · Official Bio</p>
-                </div>
-                <i class="fa-solid fa-arrow-right text-violet-400/60 text-xs group-hover:text-violet-400 group-hover:translate-x-1 transition-all"></i>
-            </a>
-
-            <!-- Placeholder: Telegram (edit as needed) -->
-            <a href="#" class="glass-card flex items-center p-4 lg:p-5 rounded-2xl group shadow-lg fade-in" style="animation-delay:0.45s">
-                <div class="icon-wrap w-11 h-11 bg-sky-500/15 text-sky-300 rounded-xl flex items-center justify-center mr-4 border border-sky-500/20">
-                    <i class="fa-brands fa-telegram text-xl lg:text-2xl"></i>
-                </div>
-                <div class="flex-grow">
-                    <p class="text-sm lg:text-base font-bold text-white">Telegram</p>
-                    <p class="text-[9px] lg:text-[10px] text-gray-400 uppercase tracking-widest">Direct Message</p>
-                </div>
-                <i class="fa-solid fa-arrow-right text-violet-400/60 text-xs group-hover:text-violet-400 group-hover:translate-x-1 transition-all"></i>
-            </a>
-
-            <!-- Placeholder: WhatsApp Group (edit as needed) -->
-            <a href="#" class="glass-card flex items-center p-4 lg:p-5 rounded-2xl group shadow-lg fade-in" style="animation-delay:0.5s">
-                <div class="icon-wrap w-11 h-11 bg-emerald-500/15 text-emerald-300 rounded-xl flex items-center justify-center mr-4 border border-emerald-500/20">
-                    <i class="fa-brands fa-whatsapp text-xl lg:text-2xl"></i>
-                </div>
-                <div class="flex-grow">
-                    <p class="text-sm lg:text-base font-bold text-white">WhatsApp</p>
-                    <p class="text-[9px] lg:text-[10px] text-gray-400 uppercase tracking-widest">Community / Group</p>
-                </div>
-                <i class="fa-solid fa-arrow-right text-violet-400/60 text-xs group-hover:text-violet-400 group-hover:translate-x-1 transition-all"></i>
-            </a>
-
-            <!-- Placeholder: Instagram (edit as needed) -->
-            <a href="#" class="glass-card flex items-center p-4 lg:p-5 rounded-2xl group shadow-lg fade-in" style="animation-delay:0.55s">
-                <div class="icon-wrap w-11 h-11 bg-pink-500/15 text-pink-300 rounded-xl flex items-center justify-center mr-4 border border-pink-500/20">
-                    <i class="fa-brands fa-instagram text-xl lg:text-2xl"></i>
-                </div>
-                <div class="flex-grow">
-                    <p class="text-sm lg:text-base font-bold text-white">Instagram</p>
-                    <p class="text-[9px] lg:text-[10px] text-gray-400 uppercase tracking-widest">Personal Account</p>
-                </div>
-                <i class="fa-solid fa-arrow-right text-violet-400/60 text-xs group-hover:text-violet-400 group-hover:translate-x-1 transition-all"></i>
-            </a>
-
-            <!-- Footer -->
-            <footer class="mt-2 fade-in" style="animation-delay:0.65s">
-                <div class="terminal-bg rounded-2xl p-4 border border-violet-500/10 shadow-xl">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="text-center lg:text-left">
-                            <span class="text-[8px] text-violet-300/40 font-bold uppercase block tracking-widest font-mono mb-1">System Clock</span>
-                            <span id="clock" class="text-[11px] lg:text-[12px] font-mono text-violet-300">00:00:00</span>
-                        </div>
-                        <div class="border-l border-violet-500/10 pl-4 text-center lg:text-left">
-                            <span class="text-[8px] text-violet-300/40 font-bold uppercase block tracking-widest font-mono mb-1">Uptime</span>
-                            <span id="runtime" class="text-[11px] lg:text-[12px] font-mono text-pink-300">0s</span>
-                        </div>
-                    </div>
-                    <div class="glow-line mt-3 mb-2"></div>
-                    <p class="text-center text-[7px] font-bold uppercase tracking-[0.5em] text-violet-300/30 font-mono">DODO · CRYSTALLIZE012 · 2026</p>
-                </div>
-            </footer>
-
-        </div>
-    </div>
-</div>
-
+<!-- ============================================================
+     ANTI-INSPECT / ANTI-DEVTOOLS PROTECTION
+     ============================================================ -->
 <script>
-    // ── Typing animation ──────────────────────────────────────────────
-    const text = "Hola! I'm Dodo (@Crystallize012). I love building cool stuff with code — one commit at a time. Still learning, always growing! ✨";
-    const typingEl = document.getElementById('typing-text');
-    const extraInfo = document.getElementById('extra-info');
-    let i = 0;
+(function(){
+  'use strict';
 
-    function type() {
-        if (i < text.length) {
-            typingEl.textContent += text[i++];
-            setTimeout(type, 32);
-        } else {
-            typingEl.classList.remove('cursor');
-            extraInfo.classList.remove('hidden');
-        }
+  /* 1. Disable right-click context menu */
+  document.addEventListener('contextmenu', function(e){
+    e.preventDefault();
+    return false;
+  });
+
+  /* 2. Block keyboard shortcuts: F12, Ctrl+Shift+I/J/C/U, Ctrl+U, Ctrl+S */
+  document.addEventListener('keydown', function(e){
+    var k = e.key || e.keyCode;
+    // F12
+    if (k === 'F12' || k === 123) { e.preventDefault(); return false; }
+    // Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C / Ctrl+Shift+K
+    if (e.ctrlKey && e.shiftKey && (k==='I'||k==='i'||k===73 ||
+                                    k==='J'||k==='j'||k===74 ||
+                                    k==='C'||k==='c'||k===67 ||
+                                    k==='K'||k==='k'||k===75)) {
+      e.preventDefault(); return false;
     }
+    // Ctrl+U (view source)
+    if (e.ctrlKey && (k==='U'||k==='u'||k===85)) { e.preventDefault(); return false; }
+    // Ctrl+S (save page)
+    if (e.ctrlKey && (k==='S'||k==='s'||k===83)) { e.preventDefault(); return false; }
+    // Ctrl+P (print)
+    if (e.ctrlKey && (k==='P'||k==='p'||k===80)) { e.preventDefault(); return false; }
+  });
 
-    // ── Clock & Uptime ────────────────────────────────────────────────
-    const launchDate = new Date("2026-01-01T00:00:00").getTime();
-
-    function updateUI() {
-        const now = new Date();
-        document.getElementById('clock').textContent = now.toLocaleTimeString('en-GB');
-        const diff = Math.floor((Date.now() - launchDate) / 1000);
-        const d = Math.floor(diff / 86400);
-        const h = Math.floor((diff % 86400) / 3600);
-        const m = Math.floor((diff % 3600) / 60);
-        const s = diff % 60;
-        document.getElementById('runtime').textContent = `${d}d ${h}h ${m}m ${s}s`;
+  /* 3. DevTools size-change detector */
+  var _threshold = 160;
+  var _devOpen   = false;
+  function _checkDevTools(){
+    var w = window.outerWidth  - window.innerWidth;
+    var h = window.outerHeight - window.innerHeight;
+    if (w > _threshold || h > _threshold) {
+      if (!_devOpen) {
+        _devOpen = true;
+        _onDevToolsOpen();
+      }
+    } else {
+      _devOpen = false;
     }
+  }
+  function _onDevToolsOpen(){
+    // Redirect to blank / wipe page content
+    document.body.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#0a0a0a;color:#ff4444;font-family:monospace;font-size:1.4rem;text-align:center;">' +
+      '🚫 Akses DevTools tidak diizinkan.<br><small style="color:#888;font-size:.8rem;margin-top:.5rem;display:block;">Tutup DevTools & refresh halaman.</small>' +
+      '</div>';
+  }
+  setInterval(_checkDevTools, 500);
 
-    setInterval(updateUI, 1000);
-    window.onload = () => { type(); updateUI(); };
+  /* 4. debugger trap — makes continuous debugging very slow */
+  (function _trap(){
+    (function(){ return false; })['constructor']('debugger')();
+    setTimeout(_trap, 50);
+  })();
+
+  /* 5. Disable text selection (optional UX choice) */
+  document.addEventListener('selectstart', function(e){ e.preventDefault(); });
+
+  /* 6. Disable drag */
+  document.addEventListener('dragstart', function(e){ e.preventDefault(); });
+
+})();
 </script>
+
+<script src="script.js" defer></script>
+
+<!-- Override WA / Telegram / Repo links after script.js renders -->
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+
+  /* ── WhatsApp link ── */
+  document.querySelectorAll('a[href*="wa.me"]').forEach(function(el){
+    el.href = 'https://wa.me/+6288212461534';
+  });
+
+  /* ── Telegram link ── */
+  document.querySelectorAll('a[href*="t.me"]').forEach(function(el){
+    el.href = 'https://t.me/dodoirused';
+  });
+
+  /* ── "Dodo Project Repository" → Saluran WhatsApp Official Dodo ── */
+  document.querySelectorAll('a[href*="github.com/Crystallize012/Dodo"]').forEach(function(el){
+    el.href   = 'https://whatsapp.com/channel/0029Vb5si3ZG8l5GJf8yaC1N';
+    el.target = '_blank';
+    el.rel    = 'noopener noreferrer';
+    // Update teks link jika ada
+    if(el.textContent && el.textContent.toLowerCase().includes('reposit')){
+      el.textContent = '📢 Saluran WhatsApp Official Dodo';
+    }
+  });
+
+  /* ── Fallback: cari semua link dengan teks "repository" ── */
+  document.querySelectorAll('a').forEach(function(el){
+    if(el.textContent && el.textContent.toLowerCase().includes('reposit') &&
+       el.href && el.href.includes('github')){
+      el.href        = 'https://whatsapp.com/channel/0029Vb5si3ZG8l5GJf8yaC1N';
+      el.textContent = '📢 Saluran WhatsApp Official Dodo';
+      el.target      = '_blank';
+      el.rel         = 'noopener noreferrer';
+    }
+  });
+
+});
+</script>
+</head>
+<body data-theme="dark">
+  <div id="app"></div>
 </body>
 </html>
