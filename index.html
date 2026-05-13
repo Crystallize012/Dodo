@@ -5,113 +5,172 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dodo | Official Bio</title>
 
-<!-- ============================================================
-     ANTI-INSPECT / ANTI-DEVTOOLS PROTECTION
-     ============================================================ -->
+<!-- ██████████████████████████████████████████████████████████
+     LAYER 0 — Hide body until security check passes
+     ██████████████████████████████████████████████████████████ -->
+<style>
+  html { visibility: hidden !important; }
+</style>
+
+<!-- ██████████████████████████████████████████████████████████
+     LAYER 1 — SYNCHRONOUS (runs BEFORE any render)
+     ██████████████████████████████████████████████████████████ -->
 <script>
-(function(){
-  'use strict';
+!function(){
+  "use strict";
 
-  /* 1. Disable right-click context menu */
-  document.addEventListener('contextmenu', function(e){
-    e.preventDefault();
-    return false;
-  });
+  var _dead = false;
 
-  /* 2. Block keyboard shortcuts: F12, Ctrl+Shift+I/J/C/U, Ctrl+U, Ctrl+S */
-  document.addEventListener('keydown', function(e){
-    var k = e.key || e.keyCode;
+  /* ── Nuke page completely ── */
+  function _kill() {
+    if (_dead) return;
+    _dead = true;
+    document.open();
+    document.write(
+      '<!DOCTYPE html><html><head><meta charset="UTF-8">' +
+      '<style>*{margin:0;padding:0}' +
+      'body{background:#050505;display:flex;align-items:center;' +
+      'justify-content:center;min-height:100vh;flex-direction:column;gap:14px}' +
+      'h1{color:#ff3333;font-family:monospace;font-size:2rem;letter-spacing:2px}' +
+      'p{color:#555;font-family:monospace;font-size:.82rem;text-align:center;line-height:1.7}' +
+      '</style></head><body>' +
+      '<h1>\u{1F6AB} AKSES DITOLAK</h1>' +
+      '<p>Developer Tools tidak diizinkan.<br>Tutup DevTools &amp; refresh halaman.</p>' +
+      '</body></html>'
+    );
+    document.close();
+    try{ window.stop(); }catch(e){}
+  }
+
+  /* ── 1. Block all keyboard shortcuts ── */
+  function _blockKey(e) {
+    var k  = (e.key  || '').toUpperCase();
+    var kc = e.keyCode || e.which || 0;
     // F12
-    if (k === 'F12' || k === 123) { e.preventDefault(); return false; }
-    // Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C / Ctrl+Shift+K
-    if (e.ctrlKey && e.shiftKey && (k==='I'||k==='i'||k===73 ||
-                                    k==='J'||k==='j'||k===74 ||
-                                    k==='C'||k==='c'||k===67 ||
-                                    k==='K'||k==='k'||k===75)) {
-      e.preventDefault(); return false;
+    if (kc === 123 || k === 'F12') { e.preventDefault(); e.stopImmediatePropagation(); return false; }
+    // Ctrl+Shift+I/J/C/K/U
+    if (e.ctrlKey && e.shiftKey && 'IJCKU'.indexOf(k) > -1) {
+      e.preventDefault(); e.stopImmediatePropagation(); return false;
     }
-    // Ctrl+U (view source)
-    if (e.ctrlKey && (k==='U'||k==='u'||k===85)) { e.preventDefault(); return false; }
-    // Ctrl+S (save page)
-    if (e.ctrlKey && (k==='S'||k==='s'||k===83)) { e.preventDefault(); return false; }
-    // Ctrl+P (print)
-    if (e.ctrlKey && (k==='P'||k==='p'||k===80)) { e.preventDefault(); return false; }
+    // Ctrl+U / Ctrl+S / Ctrl+P (view-source, save, print)
+    if (e.ctrlKey && !e.shiftKey && 'USP'.indexOf(k) > -1) {
+      e.preventDefault(); e.stopImmediatePropagation(); return false;
+    }
+  }
+  document.addEventListener('keydown',  _blockKey, true);
+  document.addEventListener('keypress', _blockKey, true);
+  document.addEventListener('keyup',    _blockKey, true);
+
+  /* ── 2. Block right-click ── */
+  document.addEventListener('contextmenu', function(e){
+    e.preventDefault(); e.stopImmediatePropagation(); return false;
+  }, true);
+
+  /* ── 3. Block select & drag ── */
+  document.addEventListener('selectstart', function(e){ e.preventDefault(); }, true);
+  document.addEventListener('dragstart',   function(e){ e.preventDefault(); }, true);
+
+  /* ── 4. DevTools window-size detector ── */
+  var _threshold = 160;
+  function _sizeCheck() {
+    if (_dead) return;
+    if (window.outerWidth - window.innerWidth   > _threshold) { _kill(); return; }
+    if (window.outerHeight - window.innerHeight > _threshold) { _kill(); return; }
+  }
+
+  /* ── 5. Debugger timing attack ── */
+  function _debugCheck() {
+    if (_dead) return;
+    var t = performance.now();
+    (function(){ return false; })['constructor']('debugger')['call']();
+    if (performance.now() - t > 80) _kill();
+  }
+
+  /* ── 6. console getter trick (Chrome / Edge) ── */
+  function _consoleCheck() {
+    if (_dead) return;
+    var el   = new Image();
+    var open = false;
+    Object.defineProperty(el, 'id', { get: function(){ open = true; return ''; } });
+    /* eslint-disable no-console */
+    (function(c){ c.log(el); c.clear(); })(window.console);
+    if (open) _kill();
+  }
+
+  /* ── 7. toString sentinel (DevTools evaluates objects → triggers it) ── */
+  var _sentinel = {
+    toString: function(){ _kill(); return ''; },
+    valueOf:  function(){ _kill(); return 0;  }
+  };
+
+  /* ── 8. Firebug legacy ── */
+  function _firebugCheck() {
+    if (_dead) return;
+    if (window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized) _kill();
+  }
+
+  /* ── 9. Silence console (prevent info leakage) ── */
+  var _noop = function(){};
+  try {
+    ['log','warn','error','info','debug','trace','table','dir','dirxml','group','groupEnd','time','timeEnd']
+      .forEach(function(m){ try{ console[m] = _noop; }catch(ex){} });
+  } catch(ex) {}
+
+  /* ── Master polling loop — 80ms interval ── */
+  function _loop() {
+    _sizeCheck();
+    _debugCheck();
+    _firebugCheck();
+    /* Ping sentinel to console every tick */
+    try{ (function(c){ c.log(_sentinel); c.clear(); })(window.console); }catch(e){}
+    if (!_dead) setTimeout(_loop, 80);
+  }
+
+  /* ── Reveal page ONLY after first checks pass, then start loop ── */
+  window.addEventListener('load', function(){
+    _sizeCheck();
+    _debugCheck();
+    _consoleCheck();
+    _firebugCheck();
+    if (!_dead) {
+      document.documentElement.style.visibility = 'visible';
+      _loop();
+    }
   });
 
-  /* 3. DevTools size-change detector */
-  var _threshold = 160;
-  var _devOpen   = false;
-  function _checkDevTools(){
-    var w = window.outerWidth  - window.innerWidth;
-    var h = window.outerHeight - window.innerHeight;
-    if (w > _threshold || h > _threshold) {
-      if (!_devOpen) {
-        _devOpen = true;
-        _onDevToolsOpen();
-      }
-    } else {
-      _devOpen = false;
-    }
-  }
-  function _onDevToolsOpen(){
-    // Redirect to blank / wipe page content
-    document.body.innerHTML =
-      '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#0a0a0a;color:#ff4444;font-family:monospace;font-size:1.4rem;text-align:center;">' +
-      '🚫 Akses DevTools tidak diizinkan.<br><small style="color:#888;font-size:.8rem;margin-top:.5rem;display:block;">Tutup DevTools & refresh halaman.</small>' +
-      '</div>';
-  }
-  setInterval(_checkDevTools, 500);
-
-  /* 4. debugger trap — makes continuous debugging very slow */
-  (function _trap(){
-    (function(){ return false; })['constructor']('debugger')();
-    setTimeout(_trap, 50);
-  })();
-
-  /* 5. Disable text selection (optional UX choice) */
-  document.addEventListener('selectstart', function(e){ e.preventDefault(); });
-
-  /* 6. Disable drag */
-  document.addEventListener('dragstart', function(e){ e.preventDefault(); });
-
-})();
+}();
 </script>
 
+<!-- ██████████████████████████████████████████████████████████
+     MAIN APP SCRIPT
+     ██████████████████████████████████████████████████████████ -->
 <script src="script.js" defer></script>
 
-<!-- Override WA / Telegram / Repo links after script.js renders -->
+<!-- ██████████████████████████████████████████████████████████
+     LAYER 2 — Post-render link overrides (WA / TG / Repo)
+     ██████████████████████████████████████████████████████████ -->
 <script>
 document.addEventListener('DOMContentLoaded', function(){
 
-  /* ── WhatsApp link ── */
-  document.querySelectorAll('a[href*="wa.me"]').forEach(function(el){
-    el.href = 'https://wa.me/+6288212461534';
+  /* WhatsApp */
+  document.querySelectorAll('a[href*="wa.me"]').forEach(function(a){
+    a.href = 'https://wa.me/+6288212461534';
   });
 
-  /* ── Telegram link ── */
-  document.querySelectorAll('a[href*="t.me"]').forEach(function(el){
-    el.href = 'https://t.me/dodoirused';
+  /* Telegram */
+  document.querySelectorAll('a[href*="t.me"]').forEach(function(a){
+    a.href = 'https://t.me/dodoirused';
   });
 
-  /* ── "Dodo Project Repository" → Saluran WhatsApp Official Dodo ── */
-  document.querySelectorAll('a[href*="github.com/Crystallize012/Dodo"]').forEach(function(el){
-    el.href   = 'https://whatsapp.com/channel/0029Vb5si3ZG8l5GJf8yaC1N';
-    el.target = '_blank';
-    el.rel    = 'noopener noreferrer';
-    // Update teks link jika ada
-    if(el.textContent && el.textContent.toLowerCase().includes('reposit')){
-      el.textContent = '📢 Saluran WhatsApp Official Dodo';
-    }
-  });
-
-  /* ── Fallback: cari semua link dengan teks "repository" ── */
-  document.querySelectorAll('a').forEach(function(el){
-    if(el.textContent && el.textContent.toLowerCase().includes('reposit') &&
-       el.href && el.href.includes('github')){
-      el.href        = 'https://whatsapp.com/channel/0029Vb5si3ZG8l5GJf8yaC1N';
-      el.textContent = '📢 Saluran WhatsApp Official Dodo';
-      el.target      = '_blank';
-      el.rel         = 'noopener noreferrer';
+  /* GitHub repo → Saluran WhatsApp Official Dodo */
+  document.querySelectorAll('a').forEach(function(a){
+    var isGithub = (a.href || '').includes('github.com/Crystallize012/Dodo');
+    var isLabel  = /reposit|project|source|github/i.test(a.textContent || '');
+    if (isGithub || isLabel) {
+      a.href   = 'https://whatsapp.com/channel/0029Vb5si3ZG8l5GJf8yaC1N';
+      a.target = '_blank';
+      a.rel    = 'noopener noreferrer';
+      if (isLabel) a.textContent = '\uD83D\uDCE2 Saluran WhatsApp Official Dodo';
     }
   });
 
